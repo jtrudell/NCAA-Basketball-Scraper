@@ -29,12 +29,10 @@ class NCAABasketballRankings
 
   def team_rankings
     rankings = Hash.new
-    @division_one_data.each_with_index do |team, index|
-      rankings[index+1] = team
-    end
+    @division_one_data.each_with_index { |team, index| rankings[index+1] = team }
     rankings
   end
 end
 
 scrape = NCAABasketballRankings.new
-p scrape.team_rankings
+puts scrape.team_rankings
