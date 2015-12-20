@@ -2,7 +2,6 @@ require 'nokogiri'
 require 'open-uri'
 
 class NCAABasketballRankings
-
   attr_reader :division_one_data
 
   def initialize
@@ -27,29 +26,15 @@ class NCAABasketballRankings
     @rankings_page.css('.ncaa-rankings-table > tbody > tr > td[5]').each { |row| records << row.content }
     records
   end
+
+  def team_rankings
+    rankings = Hash.new
+    @division_one_data.each_with_index do |team, index|
+      rankings[index+1] = team
+    end
+    rankings
+  end
 end
 
 scrape = NCAABasketballRankings.new
-puts scrape.division_one_data
-# def display_rankings
-#   @processed_division_one_data.each_with_index do |team, index|
-#     puts "Rank: #{index + 1} Team: #{team}"
-#   end
-# end
-#
-#
-# #generate divisions from data by searching for name
-# def generate_division(*division_names)
-#   division = []
-#   @processed_division_one_data.each do |school|
-#     division_names.each do |name|
-#       if school.include?(name)
-#         division << school
-#       end
-#     end
-#   end
-#   division
-# end
-#
-# display_rankings
-# p generate_division("Big Ten", "BigTen")
+p scrape.team_rankings
