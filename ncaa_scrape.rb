@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 
-class NCAABasketballRankings
+class NCAABasketball
   attr_reader :division_one_data
 
   def initialize
@@ -32,7 +32,22 @@ class NCAABasketballRankings
     @division_one_data.each_with_index { |team, index| rankings[index+1] = team }
     rankings
   end
+
+  def team_record(team_name)
+    team = @division_one_data.select { |team| team.include?(team_name) }
+    team.flatten.last
+  end
+
+  def team_wins(team_name)
+    team_record(team_name).partition("-").first.to_i
+  end
+
+  def pick_five_total(*teams)
+    teams.inject(0) do |total, team|
+      total += team_wins(team)
+    end
+  end
 end
 
-scrape = NCAABasketballRankings.new
-puts scrape.team_rankings
+scrape = NCAABasketball.new
+p scrape.pick_five_total("Texas", "Indiana", "North Carolina", "Georgetown", "Michigan St.")
