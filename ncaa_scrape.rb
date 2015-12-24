@@ -6,7 +6,7 @@ class NCAABasketball
 
   def initialize
     @rankings_page = Nokogiri::HTML(open("http://www.ncaa.com/rankings/basketball-men/d1"))
-    @division_one_data = team_names.zip(team_divisions, team_records)
+    @division_one_data = team_names.zip(team_conferences, team_records)
   end
 
   def team_names
@@ -15,10 +15,10 @@ class NCAABasketball
     names
   end
 
-  def team_divisions
-    divisions = []
-    @rankings_page.css('.ncaa-rankings-table > tbody > tr > td[4]').each { |row| divisions << row.content }
-    divisions
+  def team_conferences
+    conferences = []
+    @rankings_page.css('.ncaa-rankings-table > tbody > tr > td[4]').each { |row| conferences << row.content }
+    conferences
   end
 
   def team_records
@@ -50,4 +50,5 @@ class NCAABasketball
 end
 
 scrape = NCAABasketball.new
-p scrape.pick_five_total("Texas", "Indiana", "North Carolina", "Georgetown", "Michigan St.")
+#p scrape.pick_five_total("Texas", "Indiana", "North Carolina", "Georgetown", "Michigan St.")
+p scrape.division_one_data
