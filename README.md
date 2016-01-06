@@ -8,7 +8,7 @@ This gem uses nokogiri to scrape data from ncaa.com; if the NCAA website changes
 
 ## Installation
 
-To install from the command line: 
+To install from the command line:
 
 - gem install ncaa_scrape
 
@@ -61,6 +61,16 @@ Note: team names must match those included in scrape.division_one_data exactly.
 - scrape.pick_five_total("Michigan St.", "Georgetown", "North Carolina", "Texas", "Indiana")
 
 For use in your pick five basketball pool. Takes a list of team names and returns integer representing total wins for the 5 teams.
+
+## Tests
+
+Tests written in rspec.
+
+- gem install rspec
+
+From the spec folder:
+
+- rspec ncaa_scrape_spec.rb
 
 ## Contributing
 
