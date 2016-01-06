@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ncaa_scrape'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2016-01-06'
   s.licenses    = ['MIT']
   s.summary     = "Scrapes NCAA Men's Div I Basketball RPI Rankings from NCAA.com"
