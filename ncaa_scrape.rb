@@ -5,7 +5,7 @@ class NCAABasketball
   attr_reader :division_one_data
 
   def initialize
-    @rankings_page = Nokogiri::HTML(open("http://www.ncaa.com/rankings/basketball-men/d1"))
+    @rankings_page = Nokogiri::HTML(open("http://www.ncaa.com/rankings/basketball-men/d1/ncaa-mens-basketball-rpi"))
     @division_one_data = team_names.zip(team_conferences, team_records)
   end
 
@@ -52,3 +52,4 @@ end
 scrape = NCAABasketball.new
 #p scrape.pick_five_total("Texas", "Indiana", "North Carolina", "Georgetown", "Michigan St.")
 p scrape.division_one_data
+p scrape.team_names
