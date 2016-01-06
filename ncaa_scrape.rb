@@ -48,8 +48,3 @@ class NCAABasketball
     end
   end
 end
-
-scrape = NCAABasketball.new
-#p scrape.pick_five_total("Texas", "Indiana", "North Carolina", "Georgetown", "Michigan St.")
-p scrape.division_one_data
-p scrape.team_names
