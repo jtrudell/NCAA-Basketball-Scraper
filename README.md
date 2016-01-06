@@ -1,5 +1,5 @@
 # NCAA-Basketball-Scraper
-Scrapes 2015 NCCA Men's Basketball Division I teams/rankings/wins from http://www.ncaa.com/rankings/basketball-men/d1
+Scrapes 2015 NCCA Men's Basketball Division I RPI rankings from http://www.ncaa.com/rankings/basketball-men/d1/ncaa-mens-basketball-rpi
 
 # ncaa_scrape
 
