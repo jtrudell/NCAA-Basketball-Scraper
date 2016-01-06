@@ -8,5 +8,5 @@ Gem::Specification.new do |s|
   s.authors     = ["Jen Trudell"]
   s.email       = 'jtrudell@gmail.com'
   s.files       = ["lib/ncaa_scrape.rb"]
-  s.homepage    = 'https://rubygems.org/gems/ncaa_scrape'
+  s.homepage    = 'https://github.com/jtrudell/NCAA-Basketball-Scraper'
 end
