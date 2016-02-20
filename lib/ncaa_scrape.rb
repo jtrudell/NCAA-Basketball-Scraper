@@ -43,7 +43,11 @@ class NCAABasketball
   end
 
   def team_wins(team_name)
-    team_record(team_name).partition('-').first.to_i
+    if team_record(team_name)
+      team_record(team_name).partition('-').first.to_i
+    else
+      0
+    end
   end
 
   def pick_five_total(*teams)
