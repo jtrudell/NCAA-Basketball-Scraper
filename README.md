@@ -1,9 +1,9 @@
 # NCAA-Basketball-Scraper
-Scrapes NCCA Men's Basketball Division I RPI rankings from http://www.ncaa.com/rankings/basketball-men/d1/ncaa-mens-basketball-rpi
+Scrapes NCCA Men's Basketball Division I standings from http://www.ncaa.com/standings/basketball-men/d1
 
 # ncaa_scrape
 
-As of January 2016, ncaa_scrape lets you scrape RPI rankings for Division I Men's college basketball from the NCAA website.
+As of November 2016, ncaa_scrape lets you scrape team names and team wins from the NCAA standings webiste for Division I Men's college basketball.
 This gem uses nokogiri to scrape data from ncaa.com; if the NCAA website changes, this gem may fail.
 
 ## Installation
@@ -22,9 +22,9 @@ Once installed:
 
 ##Usage
 
-NCAABasketball.new will scrape data from NCAA.com
+NCAABasketball.new will scrape data from NCAA.com.
 
-Methods include division_one_data, team_names, team_conferences, team_records, team_rankings, team_record(team_name), team_wins(team_name), and pick_five_total(teams).
+Methods include division_one_data, team_names, team_wins(team_name), and pick_five_total(teams).
 
 ##Examples:
 
@@ -33,27 +33,17 @@ Methods include division_one_data, team_names, team_conferences, team_records, t
 - scrape = NCAABasketball.new
 - scrape.division_one_data
 
-Returns a nested array of team data, ordered by team rank (i.e., scrape.division_one_data[0] is the first ranked team).
-For each individual team array, index 0 is the team name, index 1 is the conference, and index 2 is the record.
+Returns a hash of team data, with team name (string) as the key and wins (integer) as the value.
 
-###All team names, team conferences, and all team records as arrays
+###All team names as an array
 
 - scrape.team_names
-- scrape.team_conferences
-- scrape.team_records
 
-###Team rankings as a hash
+###Individual teams wins
 
-- scrape.team_rankings
-
-Returns a hash. Key is team rank, value is an array with the name, conference and record of the team.
-
-###Individual team record or teams wins
-
-- scrape.team_record("Michigan St.")
 - scrape.team_wins("Michigan St.")
 
-The first returns the team record (e.g. "1-0-2") as a string; the second returns wins only as an integer.
+Returns wins as an integer.
 Note: team names must match those included in scrape.division_one_data exactly.
 
 ###Pick Five Total

@@ -8,7 +8,7 @@ RSpec.describe NCAABasketball do
 
   describe 'attributes' do
     it 'is initialized with data from NCAA.com' do
-      expect(NCAABasketball.new.instance_variable_get('@division_one_data')).to be_a Array
+      expect(NCAABasketball.new.instance_variable_get('@division_one_data')).to be_a Hash
       expect(NCAABasketball.new.instance_variable_get('@division_one_data')).not_to be_empty
     end
   end
@@ -19,40 +19,6 @@ RSpec.describe NCAABasketball do
       expect(all_team_names).to be_a Array
       expect(all_team_names).not_to be_empty
       expect(all_team_names.last).to be_a String
-    end
-  end
-
-  describe '#team_conferences' do
-    it 'returns an array of team conferences' do
-      all_team_conferences = @scrape.team_conferences
-      expect(all_team_conferences).to be_a Array
-      expect(all_team_conferences).not_to be_empty
-      expect(all_team_conferences.last).to be_a String
-    end
-  end
-
-  describe '#team_records' do
-    it 'returns an array of team records' do
-      all_team_records = @scrape.team_records
-      expect(all_team_records).to be_a Array
-      expect(all_team_records).not_to be_empty
-      expect(all_team_records.last).to be_a String
-    end
-  end
-
-  describe '#team_rankings' do
-    it 'returns a hash of team rankings' do
-      all_team_records = @scrape.team_rankings
-      expect(all_team_records).to be_a Hash
-      expect(all_team_records).not_to be_empty
-      expect(all_team_records[1]).to be_a Array
-    end
-  end
-
-  describe '#team_record' do
-    it "returns a string with a team's record" do
-      team = @scrape.team_record("Texas")
-      expect(team).to be_a String
     end
   end
 

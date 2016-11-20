@@ -5,45 +5,50 @@ class NCAABasketball
   attr_reader :division_one_data
 
   def initialize
-    @rankings_page = Nokogiri::HTML(open('http://www.ncaa.com/standings/basketball-men/d1'))
-    @division_one_data = team_names.zip(teams_wins)
-  end
-
-  def raw_data
-    data = []
-    @rankings_page.css(".even").each { |row| data << row.text }
-    @rankings_page.css(".odd").each { |row| data << row.text }
-    data.delete_if {|row| row.include?("WLPCT") }
+    @standings_page = Nokogiri::HTML(open('http://www.ncaa.com/standings/basketball-men/d1'))
+    @division_one_data = team_names.zip(wins).to_h
   end
 
   def team_names
     names = []
-    team_records.each { |row| names << row[0] }
+    raw_data.each { |row| names << row[0] }
     names
   end
 
-  def teams_wins
-    data = []
-    @rankings_page.css(".even").each { |row| data << row.css('.conference-boundary').text }
-    @rankings_page.css(".odd").each { |row| data << row.css('.conference-boundary').text }
-    data.reject {|x| x == 'W'}
-  end
-
-  def team_records
-    raw_data.map {|x| x.partition(/\d/) }
-  end
-
   def team_wins(team_name)
-    # if
-    #   #teams_wins include team_name return
-    # else
-    #   0
-    # end
+    @division_one_data.include?(team_name) ? @division_one_data[team_name] : 0
   end
 
   def pick_five_total(*teams)
-    teams.inject(0) do |total, team|
-      total + team_wins(team)
-    end
+    teams.inject(0) { |total, team| total + team_wins(team) }
   end
+
+  private
+
+  def even_rows
+    @standings_page.css('.even')
+  end
+
+  def odd_rows
+    @standings_page.css('.odd')
+  end
+
+  def rows
+    even_rows + odd_rows
+  end
+
+  def raw_data
+    data = []
+    rows.each { |row| data << row.text }
+    data.delete_if { |row| row.include?('WLPCT') }
+    data.map { |row| row.partition(/\d/) }
+  end
+
+  def wins
+    data = []
+    rows.each { |row| data << row.css('.conference-boundary').text }
+    data.reject { |item| item == 'W' }
+    data.map { |item| item.to_i}
+  end
+
 end
