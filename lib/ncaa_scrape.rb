@@ -5,49 +5,40 @@ class NCAABasketball
   attr_reader :division_one_data
 
   def initialize
-    @rankings_page = Nokogiri::HTML(open('http://www.ncaa.com/rankings/basketball-men/d1/ncaa-mens-basketball-rpi'))
-    @division_one_data = team_names.zip(team_conferences, team_records)
+    @rankings_page = Nokogiri::HTML(open('http://www.ncaa.com/standings/basketball-men/d1'))
+    @division_one_data = team_names.zip(teams_wins)
   end
 
-  def css_attribute(column)
-    ".ncaa-rankings-table > tbody > tr > td[#{column}]"
+  def raw_data
+    data = []
+    @rankings_page.css(".even").each { |row| data << row.text }
+    @rankings_page.css(".odd").each { |row| data << row.text }
+    data.delete_if {|row| row.include?("WLPCT") }
   end
 
   def team_names
     names = []
-    @rankings_page.css(css_attribute(3)).each { |row| names << row.content }
+    team_records.each { |row| names << row[0] }
     names
   end
 
-  def team_conferences
-    conferences = []
-    @rankings_page.css(css_attribute(4)).each { |row| conferences << row.content }
-    conferences
+  def teams_wins
+    data = []
+    @rankings_page.css(".even").each { |row| data << row.css('.conference-boundary').text }
+    @rankings_page.css(".odd").each { |row| data << row.css('.conference-boundary').text }
+    data.reject {|x| x == 'W'}
   end
 
   def team_records
-    records = []
-    @rankings_page.css(css_attribute(5)).each { |row| records << row.content }
-    records
-  end
-
-  def team_rankings
-    rankings = {}
-    @division_one_data.each_with_index { |team, index| rankings[index + 1] = team }
-    rankings
-  end
-
-  def team_record(team_name)
-    selected_team = @division_one_data.select { |team| team.include?(team_name) }
-    selected_team.flatten.last
+    raw_data.map {|x| x.partition(/\d/) }
   end
 
   def team_wins(team_name)
-    if team_record(team_name)
-      team_record(team_name).partition('-').first.to_i
-    else
-      0
-    end
+    # if
+    #   #teams_wins include team_name return
+    # else
+    #   0
+    # end
   end
 
   def pick_five_total(*teams)
