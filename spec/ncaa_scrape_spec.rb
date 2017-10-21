@@ -1,8 +1,7 @@
 require 'ncaa_scrape'
 
 RSpec.describe NCAABasketball do
-
-  before(:each) do
+  before do
     @scrape = NCAABasketball.new
   end
 
@@ -24,14 +23,14 @@ RSpec.describe NCAABasketball do
 
   describe '#team_wins' do
     it "returns an integer with a team's wins" do
-      team = @scrape.team_wins("Texas")
+      team = @scrape.team_wins('Texas')
       expect(team).to be_a Integer
     end
   end
 
   describe '#pick_five_total' do
-    it "returns an integer when given the names of five teams" do
-      pick_five = @scrape.pick_five_total("Texas", "North Carolina", "Georgetown", "Indiana", "Michigan St.")
+    it 'returns an integer when given the names of five teams' do
+      pick_five = @scrape.pick_five_total('Texas', 'North Carolina', 'Georgetown', 'Indiana', 'Michigan St.')
       expect(pick_five).to be_a Integer
     end
   end
